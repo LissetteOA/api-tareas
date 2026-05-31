@@ -11,6 +11,8 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/me', [AuthController::class, 'me']);
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/me/avatar', [AuthController::class, 'uploadAvatar']);
+    
     Route::post('/tasks', [TaskController::class, 'store']);
     Route::get('/tasks', [TaskController::class, 'index']);
     Route::put('/tasks/{task}', [TaskController::class, 'update']);
@@ -23,4 +25,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/tasks/{task}/tags', [TaskController::class, 'assignTags']);
 
     Route::delete('/tasks/{task}/tags/{tag}', [TaskController::class, 'removeTag']);
+
+    
 });

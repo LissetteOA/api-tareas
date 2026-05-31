@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller
 {
@@ -50,19 +51,39 @@ class AuthController extends Controller
         'token' => $token,
     ]);
     }
-public function me(Request $request)
+    public function me(Request $request)
     {
     return response()->json([
         'user' => $request->user()
     ]);
     }
 
-public function logout(Request $request)
+    public function logout(Request $request)
     {
     $request->user()->currentAccessToken()->delete();
 
     return response()->json([
         'message' => 'Sesión cerrada correctamente'
     ]);
+    }
+
+    public function uploadAvatar(Request $request)
+    {
+        $request->validate([
+        'avatar' => 'required|image|max:2048'
+        ]);
+
+        $user = $request->user();
+
+        $path = $request->file('avatar')->store('avatars', 'public');
+
+        $user->update([
+        'avatar' => $path
+        ]);
+
+        return response()->json([
+        'message' => 'Avatar actualizado correctamente',
+        'avatar' => asset('storage/' . $path)
+        ]);
     }
 }
