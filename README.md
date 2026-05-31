@@ -37,7 +37,7 @@ Desarrollar una API REST que permita a los usuarios registrarse, autenticarse me
 1.- Clonar el repositorio
 
 ```bash
-git clone URL_DEL_REPOSITORIO
+git clone https://github.com/LissetteOA/api-tareas.git
 cd api-tareas
 ```
 
